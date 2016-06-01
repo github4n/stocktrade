@@ -43,12 +43,12 @@ while 1:
                     conn.mystock.monitor_weakhardencode.update({'code': item['code']},{'$set': {'status': 'lowopencross0','isdeal':1}})
                     conn.mystock.trade.insert({"code":item['code'],"buytime":time.strftime("%Y-%m-%d %X", time.localtime()),"buytype":"zrztb","detailtype":"lowopencross0","buyprice":df['price'][0]})
 
-            #高开低走(20160601修改)
+            #高开低走
             if (item['status'] == 'highopen'):
                 if (df['price'] < df['open']).bool():
                     print item['code'],'判断低走价格',df['price'][0]
                     conn.mystock.monitor_weakhardencode.update({'code': item['code']},{'$set': {'status': 'highopenlow'}})
-            #高开低走再高走
+            #高开低走再高走(判断再高走的条件20160601修改)
             if (item['status'] == 'highopenlow'):
                 if (df['price'] == df['high']).bool():
                     print "GDG，推荐买入！！！",item['code']
