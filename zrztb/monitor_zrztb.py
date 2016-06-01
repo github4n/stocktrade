@@ -50,7 +50,7 @@ while 1:
                     conn.mystock.monitor_weakhardencode.update({'code': item['code']},{'$set': {'status': 'highopenlow'}})
             #高开低走再高走(判断再高走的条件20160601修改)
             if (item['status'] == 'highopenlow'):
-                if (df['price'] == df['high']).bool():
+                if (df['price'] > df['open']).bool():
                     print "GDG，推荐买入！！！",item['code']
                     print "买入时间：",time.strftime("%Y-%m-%d %X", time.localtime())
                     print "买入价格", df['price'][0]
