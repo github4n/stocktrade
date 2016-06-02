@@ -4,6 +4,7 @@ import tushare as ts
 import re
 class monitor:
     """
+    监控已经买入的股票，已统计出最佳卖点
     """
     def monitortrade(self):
         conn = pymongo.MongoClient('192.168.222.188', port=27017)
