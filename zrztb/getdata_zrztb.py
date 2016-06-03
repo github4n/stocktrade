@@ -94,3 +94,16 @@ for item in conn.mystock.todaydata.find():
         if(ztcount>0):
             print "开板个数",ztcount,item['code']
 
+
+#最高价格数据处理
+for item in conn.mystock.trade.find({"tradestatus":0}):
+    try:
+        #取得开始时间开始的最大值
+        starttime = item['buytime'].split(' ')[0]
+        df1 = ts.get_h_data(item['code'],start=starttime)['high']
+        maxprice = df1.max()
+        conn.mystock.trade.update({'code': item['code']}, {'$set': {'maxprice': maxprice}})
+
+    except Exception as e:
+        print e
+        continue
