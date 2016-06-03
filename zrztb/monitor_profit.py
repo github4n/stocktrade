@@ -19,13 +19,17 @@ class monitor:
 
             open = df1['open'][0]
             nowprice = df['price'][0]
-            profit = (float(nowprice)-float(item['buyprice']))/float(item['buyprice'])*100
+            profit = (float(nowprice) - float(item['buyprice'])) / float(item['buyprice']) * 100
+            #已经卖出的股票的收益
+            if item['tradestatus']==1:
+                profit = (float(item['sellprice'])-float(item['buyprice']))/float(item['buyprice'])*100
+
 
             if(status=='lowopencross0'):
 
-                print item['code'],item['buytime'],'buy price ',item['buyprice'],'and now price ',nowprice ,'收益:',round(profit,2),'%'
+                print item['code'],item['buytime'],'buy price ',item['buyprice'],'and now price ',nowprice ,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
             if (status == 'highopenlowhigh'):
 
-                print item['code'],item['buytime'],' buy price ', item['buyprice'],'and now price ', nowprice,'收益:',round(profit,2),'%'
+                print item['code'],item['buytime'],' buy price ', item['buyprice'],'and now price ', nowprice,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
 
 monitor().monitortrade()
