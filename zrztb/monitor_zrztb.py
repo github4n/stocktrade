@@ -7,7 +7,6 @@ import easytrader as et
 
 #最弱涨停板监控
 #
-#
 
 
 user = et.use('xq')
@@ -48,7 +47,7 @@ while 1:
                         print "买入时间：", time.strftime("%Y-%m-%d %X", time.localtime())
                         print "买入价格", df['price'][0]
                         conn.mystock.monitor_weakhardencode.update({'code': item['code']},{'$set': {'status': 'lowopencross0','isdeal':1}})
-                        conn.mystock.trade.insert({"code":item['code'],"buytime":time.strftime("%Y-%m-%d %X", time.localtime()),"buytype":"zrztb","detailtype":"lowopencross0","buyprice":df['price'][0]})
+                        conn.mystock.trade.insert({"code":item['code'],"buytime":time.strftime("%Y-%m-%d %X", time.localtime()),"buytype":"zrztb","detailtype":"lowopencross0","buyprice":df['price'][0],"tradestatus":0})
                         user.buy(item['code'],float(df['price'][0]),300)
                 #高开低走
                 if (item['status'] == 'highopen'):
@@ -62,7 +61,7 @@ while 1:
                         print "买入时间：",time.strftime("%Y-%m-%d %X", time.localtime())
                         print "买入价格", df['price'][0]
                         conn.mystock.monitor_weakhardencode.update({'code': item['code']},{'$set': {'status': 'highopenlowhigh','isdeal':1}})
-                        conn.mystock.trade.insert({"code":item['code'],"buytime":time.strftime("%Y-%m-%d %X", time.localtime()),"buytype":"zrztb","detailtype":"highopenlowhigh","buyprice":df['price'][0]})
+                        conn.mystock.trade.insert({"code":item['code'],"buytime":time.strftime("%Y-%m-%d %X", time.localtime()),"buytype":"zrztb","detailtype":"highopenlowhigh","buyprice":df['price'][0],"tradestatus":0})
                         user.buy(item['code'], float(df['price'][0]), 300)
 
 
