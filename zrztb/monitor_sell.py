@@ -4,6 +4,7 @@ import json
 import tushare as ts
 import time
 import easytrader as et
+import math
 
 """
 监控所有已经购买的股票，到达止损或者止盈，卖出
@@ -14,6 +15,9 @@ user = et.use('xq')
 user.prepare('xq.json')
 today = time.strftime("%Y-%m-%d",time.localtime())
 while 1:
+
+    if (time.strftime("%H:%M:%S", time.localtime()) < '08:30:00'):
+        time.sleep(3600)
     if(time.strftime("%H:%M:%S", time.localtime())< '09:30:00'):
         continue
 
@@ -27,17 +31,16 @@ while 1:
 
         try:
             df = ts.get_realtime_quotes(item['code'])
-
             #取得开始时间开始的最大值
             starttime = item['buytime'].split(' ')[0]
             if starttime == today:
                 continue
 
             #最大值需要替换前面程序
-            maxprice = round(item['maxprice'],2)
-            nowprice = df['price']
+            maxprice = round(float(item['maxprice']),2)
+            nowprice = round(float(df['price'][0]),2)
             #更新最大收益价格值
-            if nowprice > maxprice:
+            if (nowprice > maxprice):
                 conn.mystock.trade.update({'code': item['code']},{'$set': {'maxprice': nowprice}})
 
             #当前收益
@@ -51,12 +54,14 @@ while 1:
                 print 'sell stock:', item['code']
                 conn.mystock.trade.update({'code': item['code']}, {'$set': {'tradestatus': 1, 'sellprice': nowprice,'selldate': today}})
                 user.sell(item['code'], price=sellprice, amount=item['stockcount'])
+                print '账户卖出成功'
 
             #止盈点为最大收益回落5个点
             if maxprofit -5 >= profit:
                 print 'sell stock:',item['code']
                 conn.mystock.trade.update({'code': item['code']}, {'$set': {'tradestatus': 1,'sellprice':nowprice,'selldate':today}})
                 user.sell(item['code'], price=sellprice, amount=item['stockcount'])
+                print '账户卖出成功'
 
         except Exception as e:
             print e
