@@ -52,14 +52,14 @@ while 1:
             #止损点为5个点
             if profit < -5:
                 print 'sell stock:', item['code']
-                conn.mystock.trade.update({'code': item['code']}, {'$set': {'tradestatus': 1, 'sellprice': nowprice,'selldate': today}})
+                conn.mystock.trade.update({'code': item['code'],'tradestatus':0}, {'$set': {'tradestatus': 1, 'sellprice': nowprice,'selldate': today}})
                 user.sell(item['code'], price=sellprice, amount=item['stockcount'])
                 print '账户卖出成功'
 
             #止盈点为最大收益回落5个点
             if maxprofit -5 >= profit:
                 print 'sell stock:',item['code']
-                conn.mystock.trade.update({'code': item['code']}, {'$set': {'tradestatus': 1,'sellprice':nowprice,'selldate':today}})
+                conn.mystock.trade.update({'code': item['code'],'tradestatus':0}, {'$set': {'tradestatus': 1,'sellprice':nowprice,'selldate':today}})
                 user.sell(item['code'], price=sellprice, amount=item['stockcount'])
                 print '账户卖出成功'
 
