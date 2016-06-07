@@ -27,9 +27,9 @@ class monitor:
 
             if(status=='lowopencross0'):
 
-                print item['code'],item['buytime'],'buy price ',item['buyprice'],'and now price ',nowprice ,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
+                print '[lowopencross0] ',item['code'],item['buytime'],'buy price ',item['buyprice'],'and now price ',nowprice ,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
             if (status == 'highopenlowhigh'):
 
-                print item['code'],item['buytime'],' buy price ', item['buyprice'],'and now price ', nowprice,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
+                print '[highopenlowhigh] ',item['code'],item['buytime'],' buy price ', item['buyprice'],'and now price ', nowprice,'收益:',round(profit,2),'%','持股状态:',item['tradestatus']
 
 monitor().monitortrade()
