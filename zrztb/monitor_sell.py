@@ -53,14 +53,28 @@ while 1:
             if profit < -5:
                 print 'sell stock:', item['code']
                 conn.mystock.trade.update({'code': item['code'],'tradestatus':0}, {'$set': {'tradestatus': 1, 'sellprice': nowprice,'selldate': today}})
-                user.sell(item['code'], price=sellprice, amount=item['stockcount'])
+
+                #计算可买股票数
+                sellcount = item['stockcount']
+                for position in user.position:
+                    if item['code'] in position['stock_code']:
+                        sellcount = position['enable_amount']
+
+                user.sell(item['code'], price=sellprice, amount=sellcount)
                 print '账户卖出成功'
 
             #止盈点为最大收益回落5个点
             if maxprofit -5 >= profit:
                 print 'sell stock:',item['code']
                 conn.mystock.trade.update({'code': item['code'],'tradestatus':0}, {'$set': {'tradestatus': 1,'sellprice':nowprice,'selldate':today}})
-                user.sell(item['code'], price=sellprice, amount=item['stockcount'])
+
+                # 计算可买股票数
+                sellcount = item['stockcount']
+                for position in user.position:
+                    if item['code'] in position['stock_code']:
+                        sellcount = position['enable_amount']
+
+                user.sell(item['code'], price=sellprice, amount=sellcount)
                 print '账户卖出成功'
 
         except Exception as e:
