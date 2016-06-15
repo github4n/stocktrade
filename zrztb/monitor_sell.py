@@ -56,12 +56,16 @@ while 1:
 
                 #计算可买股票数
                 sellcount = item['stockcount']
-                for position in user.position:
-                    if item['code'] in position['stock_code']:
-                        sellcount = position['enable_amount']
-
+                #
+                # print 'itemsellcount:',item['stockcount']
+                #
+                # for position in user.position:
+                #     if item['code'] in position['stock_code']:
+                #         sellcount = position['enable_amount']
+                #         print position
+                # print 'sellcount:',sellcount
                 user.sell(item['code'], price=sellprice, amount=sellcount)
-                print '账户卖出成功'
+                print '账户卖出成功 ',sellcount
 
             #止盈点为最大收益回落5个点
             if maxprofit -5 >= profit:
@@ -70,12 +74,17 @@ while 1:
 
                 # 计算可买股票数
                 sellcount = item['stockcount']
-                for position in user.position:
-                    if item['code'] in position['stock_code']:
-                        sellcount = position['enable_amount']
-
+                #
+                # print 'itemsellcount:', item['stockcount']
+                #
+                # for position in user.position:
+                #     if item['code'] in position['stock_code']:
+                #         print position
+                #         sellcount = position['enable_amount']
+                #
+                # print 'sellcount:', sellcount
                 user.sell(item['code'], price=sellprice, amount=sellcount)
-                print '账户卖出成功'
+                print '账户卖出成功 ',sellcount
 
         except Exception as e:
             print e
