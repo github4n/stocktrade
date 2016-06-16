@@ -51,9 +51,10 @@ while 1:
                     print "买入时间：", time.strftime("%Y-%m-%d %X", time.localtime())
                     print "买入价格", df['price'][0]
 
+                    conn.mystock.monitor_weakhardencode.update({'code': item['code'], 'status': 'lowopen'},{'$set': {'status': 'lowopencross0', 'isdeal': 1}})
+
                     #持仓数量小于策略数量时，购买
                     if(maxstockcount > len(user.position)):
-                        conn.mystock.monitor_weakhardencode.update({'code': item['code'],'status':'lowopen'},{'$set': {'status': 'lowopencross0','isdeal':1}})
                         # 买入价格高于当前价格，以确定肯定能买到
                         buyprice = round(float(df['price'][0])*1.02,2)
                         stockcount = int(user.balance[0]['enable_balance'] / (maxstockcount-len(user.position)) / (buyprice))
@@ -76,9 +77,10 @@ while 1:
                     print "买入时间：",time.strftime("%Y-%m-%d %X", time.localtime())
                     print "买入价格", df['price'][0]
 
+                    conn.mystock.monitor_weakhardencode.update({'code': item['code'], 'status': 'highopenlow'},{'$set': {'status': 'highopenlowhigh', 'isdeal': 1}})
+
                     # 持仓数量小于策略数量时，购买
                     if (maxstockcount > len(user.position)):
-                        conn.mystock.monitor_weakhardencode.update({'code': item['code'], 'status': 'highopenlow'},{'$set': {'status': 'highopenlowhigh', 'isdeal': 1}})
                         #买入价格高于当前价格，以确定肯定能买到
                         buyprice = round(float(df['price'][0]) * 1.02, 2)
                         #购买股票数量
