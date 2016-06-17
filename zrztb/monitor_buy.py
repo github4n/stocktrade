@@ -92,7 +92,7 @@ while 1:
 
                         conn.mystock.trade.insert(
                             {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
-                             "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                             "buytype": "zrztb", "detailtype": "highopenlowhigh", "buyprice": df['price'][0],
                              "tradestatus": 0, 'stockcount': stockcount})
                         user.buy(item['code'], float(df['price'][0]), stockcount)
                         print '账户买入成功'
