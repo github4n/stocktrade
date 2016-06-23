@@ -8,9 +8,14 @@ import easytrader as et
 #最弱涨停板监控
 #
 
+useryjb = et.use('yjb')
+useryjb.prepare('yjb.json')
+
 
 user = et.use('xq')
 user.prepare('xq.json')
+
+
 
 maxstockcount = 6
 
@@ -53,6 +58,24 @@ while 1:
 
                     conn.mystock.monitor_weakhardencode.update({'code': item['code'], 'status': 'lowopen'},{'$set': {'status': 'lowopencross0', 'isdeal': 1}})
 
+                    # 佣金宝购买策略
+                    stockcount = int(user.balance[0]['enable_balance'] / (buyprice * 100))
+                    conn.mystock.yjbtrade.insert(
+                        {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
+                         "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                         "tradestatus": 0, 'stockcount': stockcount})
+                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+
+                    # 买入股票
+                    useryjb.buy(item['code'], price=buyprice, amount=stockcount)
+                    print '***********************'
+                    print '***********************'
+                    print '*****佣金宝买入成功*****'
+                    print '***********************'
+                    print '***********************'
+                    print '买入价格', buyprice
+
+
                     #持仓数量小于策略数量时，购买
                     if(maxstockcount > len(user.position)):
                         # 买入价格高于当前价格，以确定肯定能买到
@@ -65,7 +88,11 @@ while 1:
                         print '剩余可用资金', user.balance[0]['enable_balance']
                         print '买入数量', stockcount
 
-            #高开低走
+
+
+
+
+                    #高开低走
             if (item['status'] == 'highopen'):
                 if (df['price'] < df['open']).bool():
                     print item['code'],'判断低走价格',df['price'][0]
@@ -78,6 +105,23 @@ while 1:
                     print "买入价格", df['price'][0]
 
                     conn.mystock.monitor_weakhardencode.update({'code': item['code'], 'status': 'highopenlow'},{'$set': {'status': 'highopenlowhigh', 'isdeal': 1}})
+
+                    # 佣金宝购买策略
+                    stockcount = int(user.balance[0]['enable_balance'] / (buyprice * 100))
+                    conn.mystock.yjbtrade.insert(
+                        {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
+                         "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                         "tradestatus": 0, 'stockcount': stockcount})
+                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+
+                    # 买入股票
+                    useryjb.buy(item['code'], price=buyprice, amount=stockcount)
+                    print '***********************'
+                    print '***********************'
+                    print '*****佣金宝买入成功*****'
+                    print '***********************'
+                    print '***********************'
+                    print '买入价格', buyprice
 
                     # 持仓数量小于策略数量时，购买
                     if (maxstockcount > len(user.position)):
@@ -98,6 +142,9 @@ while 1:
                         print '账户买入成功'
                         print '剩余可用资金', user.balance[0]['enable_balance']
                         print '买入数量', stockcount
+
+
+
 
 
         except Exception as e:
