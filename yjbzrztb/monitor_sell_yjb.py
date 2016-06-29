@@ -74,6 +74,8 @@ while 1:
                     print '止损卖出'
                     print '账户卖出成功 ',sellcount
                 else:
+                    print sellret
+                    print sellret['error_info'].encode("utf-8")
                     print '卖出错误'
 
             #止盈点为最大收益回落5个点
@@ -92,6 +94,8 @@ while 1:
                     print '止盈卖出'
                     print '账户卖出成功 ',sellcount
                 else:
+                    print sellret
+                    print sellret['error_info'].encode("utf-8")
                     print '卖出错误'
 
         except Exception as e:
