@@ -79,7 +79,7 @@ while 1:
 
                     else:
                         print '购买失败'
-                        print buyret
+                        print buyret['error_info'].encode("utf-8")
 
                     #高开低走
             if (item['status'] == 'highopen'):
@@ -115,7 +115,7 @@ while 1:
                              "tradestatus": 0, 'stockcount': 100})
                     else:
                         print '购买失败'
-                        print buyret
+                        print buyret['error_info'].encode("utf-8")
 
         except Exception as e:
             print e
