@@ -21,8 +21,8 @@ class monitor:
             nowprice = df['price'][0]
             profit = (float(nowprice) - float(item['buyprice'])) / float(item['buyprice']) * 100
             nowprofit = (float(nowprice) - float(item['buyprice'])) / float(item['buyprice']) * 100
-            # maxprofit = (float(item['maxprice']) - float(item['buyprice'])) / float(item['buyprice']) * 100
-            maxprofit = 0
+            maxprofit = (float(item['maxprice']) - float(item['buyprice'])) / float(item['buyprice']) * 100
+            # maxprofit = 0
             #已经卖出的股票的收益
             if item['tradestatus']==1:
                 profit = (float(item['sellprice'])-float(item['buyprice']))/float(item['buyprice'])*100
