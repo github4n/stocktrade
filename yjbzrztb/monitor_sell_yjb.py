@@ -58,8 +58,6 @@ while 1:
 
             #坑爹的卖出价格计算
             sellprice = round(float(nowprice) * 0.98,2)
-            if item['code']=='603002':
-                print 'aaaaaaaaaaa'
             #止损点为5个点
             if profit < -5 and todayprofit < 0:
                 print 'sell stock:', item['code']
@@ -75,6 +73,7 @@ while 1:
                 print sellret
                 print '止损卖出'
                 print '账户卖出成功 ',sellcount
+                print '========================================'
                 # else:
                 #     print sellret
                 #     print sellret['error_info'].encode("utf-8")
@@ -95,6 +94,8 @@ while 1:
                 print sellret['error_info'].encode("utf-8")
                 print '止盈卖出'
                 print '账户卖出成功 ',sellcount
+                print '========================================'
+
                 # else:
                 #     print sellret
                 #     print sellret['error_info'].encode("utf-8")
