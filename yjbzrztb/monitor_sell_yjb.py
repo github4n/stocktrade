@@ -58,6 +58,8 @@ while 1:
 
             #坑爹的卖出价格计算
             sellprice = round(float(nowprice) * 0.98,2)
+            if item['code']=='603002':
+                print 'aaaaaaaaaaa'
             #止损点为5个点
             if profit < -5 and todayprofit < 0:
                 print 'sell stock:', item['code']
@@ -79,24 +81,24 @@ while 1:
                 #     print '卖出错误'
 
             #最大收益大于10个点，止盈点为最大收益回落5个点
-            if maxprofit -5 >= profit and maxprofit > 10:
+            if maxprofit -5 >= profit:
                 print 'sell stock:',item['code']
 
                 # 计算可买股票数
                 sellcount = item['stockcount']
 
                 sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
-                if sellret['error_no'].encode('utf-8') == 0:
-                    conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
-                        '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying'}})
-                    print sellret
-                    print sellret['error_info'].encode("utf-8")
-                    print '止盈卖出'
-                    print '账户卖出成功 ',sellcount
-                else:
-                    print sellret
-                    print sellret['error_info'].encode("utf-8")
-                    print '卖出错误'
+                # if sellret['error_no'].encode('utf-8') == 0:
+                conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
+                    '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying'}})
+                print sellret
+                print sellret['error_info'].encode("utf-8")
+                print '止盈卖出'
+                print '账户卖出成功 ',sellcount
+                # else:
+                #     print sellret
+                #     print sellret['error_info'].encode("utf-8")
+                #     print '卖出错误'
 
         except Exception as e:
             print e
