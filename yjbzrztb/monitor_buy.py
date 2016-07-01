@@ -64,26 +64,26 @@ while 1:
 
                     # 买入股票(初期设置100的数量，后期使用策略)
                     buyret=useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
-                    if buyret['error_no'].encode("utf-8")==0:
+                    # if buyret['error_no'].encode("utf-8")==0:
 
 
                         # user.entrust
 
-                        print buyret
-                        print '***********************'
-                        print '***********************'
-                        print '*****佣金宝买入成功*****'
-                        print '***********************'
-                        print '***********************'
-                        print '买入价格', buyprice
-                        conn.mystock.yjbtrade.insert(
-                            {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
-                             "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                             "tradestatus": 0, 'stockcount': 100,'maxprice':df['price'][0]})
+                    print buyret
+                    print '***********************'
+                    print '***********************'
+                    print '*****佣金宝买入成功*****'
+                    print '***********************'
+                    print '***********************'
+                    print '========================================'
+                    conn.mystock.yjbtrade.insert(
+                        {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
+                         "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                         "tradestatus": 0, 'stockcount': 100,'maxprice':df['price'][0]})
 
-                    else:
-                        print '购买失败'
-                        print buyret['error_info'].encode("utf-8")
+                    # else:
+                    #     print '购买失败'
+                    #     print buyret['error_info'].encode("utf-8")
 
                     #高开低走
             if (item['status'] == 'highopen'):
@@ -105,21 +105,21 @@ while 1:
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
                     # 买入股票(初期设置100的数量，后期使用策略)
                     buyret = useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
-                    if buyret['error_no'].encode("utf-8") == 0:
-                        print buyret
-                        print '***********************'
-                        print '***********************'
-                        print '*****佣金宝买入成功*****'
-                        print '***********************'
-                        print '***********************'
-                        print '买入价格', buyprice
-                        conn.mystock.yjbtrade.insert(
-                            {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
-                             "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                             "tradestatus": 0, 'stockcount': 100 ,'maxprice':df['price'][0]})
-                    else:
-                        print '购买失败'
-                        print buyret['error_info'].encode("utf-8")
+                    # if buyret['error_no'].encode("utf-8") == 0:
+                    print buyret
+                    print '***********************'
+                    print '***********************'
+                    print '*****佣金宝买入成功*****'
+                    print '***********************'
+                    print '***********************'
+                    print '========================================'
+                    conn.mystock.yjbtrade.insert(
+                        {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
+                         "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                         "tradestatus": 0, 'stockcount': 100 ,'maxprice':df['price'][0]})
+                    # else:
+                    #     print '购买失败'
+                    #     print buyret['error_info'].encode("utf-8")
 
         except Exception as e:
             print e
