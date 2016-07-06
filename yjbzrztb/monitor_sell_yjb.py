@@ -80,7 +80,7 @@ while 1:
                 #     print '卖出错误'
 
             #最大收益大于10个点，止盈点为最大收益回落5个点
-            if maxprofit -3 >= profit:
+            if maxprofit -5 >= profit:
                 print 'sell stock:',item['code']
 
                 # 计算可买股票数
