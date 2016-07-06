@@ -79,10 +79,11 @@ while 1:
                         conn.mystock.yjbtrade.insert(
                             {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
                              "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                             "tradestatus": 0, 'stockcount': 100,'maxprice':df['price'][0]})
+                             "tradestatus": 0, 'stockcount': 100 , 'maxprice':df['price'][0],'buyret':buyret})
 
                     else:
                         print '购买失败'
+                        print buyret
                         print buyret['error_info'].encode("utf-8")
 
                     #高开低走
@@ -116,9 +117,10 @@ while 1:
                         conn.mystock.yjbtrade.insert(
                             {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
                              "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                             "tradestatus": 0, 'stockcount': 100 ,'maxprice':df['price'][0]})
+                             "tradestatus": 0, 'stockcount': 100 ,'maxprice':df['price'][0],'buyret':buyret})
                     else:
                         print '购买失败'
+                        print buyret
                         print buyret['error_info'].encode("utf-8")
 
         except Exception as e:
