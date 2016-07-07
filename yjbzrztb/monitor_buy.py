@@ -64,7 +64,7 @@ while 1:
 
                     # 买入股票(初期设置100的数量，后期使用策略)
                     buyret=useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
-                    if buyret['error_no'].encode("utf-8")==0:
+                    if buyret['error_no'].encode("utf-8")=='0':
 
 
                         # user.entrust
@@ -106,7 +106,7 @@ while 1:
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
                     # 买入股票(初期设置100的数量，后期使用策略)
                     buyret = useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
-                    if buyret['error_no'].encode("utf-8") == 0:
+                    if buyret['error_no'].encode("utf-8") == '0':
                         print buyret
                         print '***********************'
                         print '***********************'
