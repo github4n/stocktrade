@@ -67,39 +67,64 @@ while 1:
 
                 sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
 
-                # if sellret['error_no'].encode('utf-8')==0:
-                conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
-                    '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhisun'}})
-                print sellret
-                print '止损卖出'
-                print '账户卖出成功 ',sellcount
-                print '========================================'
-                # else:
-                #     print sellret
-                #     print sellret['error_info'].encode("utf-8")
-                #     print '卖出错误'
+                if sellret['error_no'].encode('utf-8')=='0':
+                    conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
+                        '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhisun'}})
+                    print sellret
+                    print '止损卖出'
+                    print '账户卖出成功 ',sellcount
+                    print '========================================'
+                else:
+                    print sellret
+                    print sellret['error_info'].encode("utf-8")
+                    print '卖出错误'
 
             #最大收益大于10个点，止盈点为最大收益回落5个点
-            if maxprofit -5 >= profit:
-                print 'sell stock:',item['code']
+            if maxprofit > 10:
+                if maxprofit -5 >= profit:
+                    print 'sell stock:',item['code']
 
-                # 计算可买股票数
-                sellcount = item['stockcount']
+                    # 计算可买股票数
+                    sellcount = item['stockcount']
 
-                sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
-                # if sellret['error_no'].encode('utf-8') == 0:
-                conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
-                    '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying'}})
-                print sellret
-                print sellret['error_info'].encode("utf-8")
-                print '止盈卖出'
-                print '账户卖出成功 ',sellcount
-                print '========================================'
+                    sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
+                    if sellret['error_no'].encode('utf-8') == '0':
+                        conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
+                            '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying'}})
+                        print sellret
+                        print sellret['error_info'].encode("utf-8")
+                        print '止盈卖出'
+                        print '账户卖出成功 ',sellcount
+                        print '========================================'
 
-                # else:
-                #     print sellret
-                #     print sellret['error_info'].encode("utf-8")
-                #     print '卖出错误'
+                    else:
+                        print sellret
+                        print sellret['error_info'].encode("utf-8")
+                        print '卖出错误'
+            #收益低于10，回落3个点止盈
+            if maxprofit <= 10:
+                if maxprofit - 3 >= profit:
+                    print 'sell stock:', item['code']
+
+                    # 计算可买股票数
+                    sellcount = item['stockcount']
+
+                    sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
+                    if sellret['error_no'].encode('utf-8') == '0':
+                        conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
+                            '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today,
+                                     'selltype': 'zhiying'}})
+                        print sellret
+                        print sellret['error_info'].encode("utf-8")
+                        print '止盈卖出'
+                        print '账户卖出成功 ', sellcount
+                        print '========================================'
+
+                    else:
+                        print sellret
+                        print sellret['error_info'].encode("utf-8")
+                        print '卖出错误'
+
 
         except Exception as e:
             print e
