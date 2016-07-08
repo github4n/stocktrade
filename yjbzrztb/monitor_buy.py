@@ -116,7 +116,7 @@ while 1:
                         print '========================================'
                         conn.mystock.yjbtrade.insert(
                             {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
-                             "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                             "buytype": "zrztb", "detailtype": "highopenlowhigh", "buyprice": df['price'][0],
                              "tradestatus": 0, 'stockcount': 100 ,'maxprice':df['price'][0],'buyret':buyret})
                     else:
                         print '购买失败'
