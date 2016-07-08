@@ -90,7 +90,7 @@ while 1:
                     sellret = user_sell.sell(item['code'].encode("utf-8"), price=sellprice, amount=sellcount)
                     if sellret['error_no'].encode('utf-8') == '0':
                         conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
-                            '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying'}})
+                            '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today, 'selltype': 'zhiying','sellret':sellret}})
                         print sellret
                         print sellret['error_info'].encode("utf-8")
                         print '止盈卖出'
@@ -113,7 +113,7 @@ while 1:
                     if sellret['error_no'].encode('utf-8') == '0':
                         conn.mystock.yjbtrade.update({'code': item['code'], 'tradestatus': 0}, {
                             '$set': {'tradestatus': 1, 'sellprice': nowprice, 'selldate': today,
-                                     'selltype': 'zhiying'}})
+                                     'selltype': 'zhiying','sellret':sellret}})
                         print sellret
                         print sellret['error_info'].encode("utf-8")
                         print '止盈卖出'
