@@ -101,7 +101,7 @@ while 1:
                         print sellret
                         print sellret['error_info'].encode("utf-8")
                         print '卖出错误'
-            #收益低于10，回落3个点止盈
+            #收益低于10，回落4个点止盈
             if maxprofit <= 10:
                 if maxprofit - 4 >= profit:
                     print 'sell stock:', item['code']
@@ -126,7 +126,7 @@ while 1:
                         print '卖出错误'
                 # 最大收益为负数
                 if maxprofit <= 0:
-                    if maxprofit - 3 >= profit:
+                    if maxprofit + 3 >= profit:
                         print 'sell stock:', item['code']
 
                         # 计算可买股票数
