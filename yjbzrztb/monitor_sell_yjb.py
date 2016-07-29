@@ -126,7 +126,7 @@ while 1:
                         print '卖出错误'
                 # 最大收益为负数
                 if maxprofit <= 0:
-                    if maxprofit + 3 >= profit:
+                    if maxprofit + 4 >= profit:
                         print 'sell stock:', item['code']
 
                         # 计算可买股票数
