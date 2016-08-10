@@ -53,6 +53,10 @@ class sellMonitor:
                 # 坑爹的卖出价格计算
                 sellprice = round(float(nowprice) * 0.98, 2)
 
+                #新增卖出策略保证盈利(1/3卖出策略)
+                if self.ifSell(profit, maxprofit, todayprofit, 0):
+                    self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun')
+
                 #可以卖出标识
                 if item['tradestatus']==0:
                     # 止损点为5个点
@@ -114,7 +118,16 @@ class sellMonitor:
             print sellret
             print sellret['error_info'].encode("utf-8")
             print '卖出错误'
+    #卖出策略
+    def ifSell(self,profit,maxProfit,todayprofit,daycount):
+        if profit <= maxProfit*0.3:
+            return 1
+        #超过3天收益低于3个点，出局
+        if daycount >= 3:
+            if maxProfit < 3:
+                return 1
 
+        return 0
 
 
     def monitor(self):
