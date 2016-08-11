@@ -54,7 +54,8 @@ class sellMonitor:
                 sellprice = round(float(nowprice) * 0.98, 2)
 
                 #新增卖出策略保证盈利(1/3卖出策略)
-                if self.ifSell(profit, maxprofit, todayprofit, 0):
+                sellcount = item['stockcount']
+                if item['tradestatus']==0 and self.ifSell(profit, maxprofit, todayprofit, 0):
                     self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun')
 
                 #可以卖出标识
@@ -115,6 +116,7 @@ class sellMonitor:
             print '========================================'
 
         else:
+            print code
             print sellret
             print sellret['error_info'].encode("utf-8")
             print '卖出错误'
