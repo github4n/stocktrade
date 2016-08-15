@@ -71,7 +71,7 @@ class buyMonitor:
             print '***********************'
             print '========================================'
         else:
-            print '购买失败'
+            print code,'购买失败'
             print buyret
             print buyret['error_info'].encode("utf-8")
     #更新监控数据状态
