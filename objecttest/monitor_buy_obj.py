@@ -107,7 +107,7 @@ class buyMonitor:
             if (time.strftime("%H:%M:%S", time.localtime()) == '11:30:00'):
                 time.sleep(5400)
             # 下午3点退出
-            if (time.strftime("%H:%M:%S", time.localtime()) == '15:00:00'):
+            if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
                 break
             self.deal()
 
