@@ -122,7 +122,8 @@ class sellMonitor:
             print '卖出错误'
     #卖出策略
     def ifSell(self,profit,maxProfit,todayprofit,daycount):
-        if profit <= maxProfit*0.3:
+        #低于最大收益的30%卖出
+        if profit <= maxProfit*0.6:
             return 1
         #超过3天收益低于3个点，出局
         if daycount >= 3:
