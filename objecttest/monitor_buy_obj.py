@@ -51,12 +51,13 @@ class buyMonitor:
     #买入股票
     def buyStock(self,df,code,type):
         # 佣金宝购买策略
-        stockCount = 100
-        #stockCount = int(user.balance[0]['enable_balance'] / (buyprice * 100))
-
+        buyCount = 100
         buyprice = round(float(df['price'][0]) * 1.02, 2)
+        stockCount = int(self.user.balance[0]['enable_balance'] / (buyprice * 100))
+        if stockCount > 200:
+            buyCount = 200
         # 买入股票(初期设置100的数量，后期使用策略)
-        buyret = self.useryjb.buy(code, price=buyprice, amount=stockCount)
+        buyret = self.useryjb.buy(code, price=buyprice, amount=buyCount)
         if buyret['error_no'].encode("utf-8") == '0':
             #修改状态代码
             self.updateStatus(code,type)
