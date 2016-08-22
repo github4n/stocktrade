@@ -30,12 +30,15 @@ class sellMonitor:
                 maxprice = round(float(item['maxprice']), 2)
                 nowprice = round(float(df['price'][0]), 2)
                 preclose = round(float(df['pre_close'][0]), 2)
-
+                lossprice = round(float(item['lossprice']), 2)
                 #如果当天，更新最大价格
                 if starttime == self.today:
                     # 更新最大收益价格值
                     if (nowprice > maxprice):
                         conn.mystock.yjbtrade.update({'code': item['code']}, {'$set': {'maxprice': nowprice}})
+                    # 更新最低价格
+                    if (nowprice < lossprice):
+                        conn.mystock.yjbtrade.update({'code': item['code']}, {'$set': {'lossprice': lossprice}})
                     continue
 
                 # 更新最大收益价格值
