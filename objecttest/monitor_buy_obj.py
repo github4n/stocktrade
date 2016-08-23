@@ -54,10 +54,10 @@ class buyMonitor:
         buyCount = 100
         buyprice = round(float(df['price'][0]) * 1.02, 2)
         #最大数量
-        if self.user.balance[0]['asset_balance']/3 > self.user.balance[0]['enable_balance']:
-            buyCount = int(self.user.balance[0]['enable_balance'] / (buyprice * 100))
+        if self.useryjb.balance[0]['asset_balance']/3 > self.useryjb.balance[0]['enable_balance']:
+            buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
-            buyCount = int(self.user.balance[0]['asset_balance']/3 / (buyprice * 100))
+            buyCount = int(self.useryjb.balance[0]['asset_balance']/3 / (buyprice * 100))*100
         # 买入股票(初期设置100的数量，后期使用策略)
         buyret = self.useryjb.buy(code, price=buyprice, amount=buyCount)
         if buyret['error_no'].encode("utf-8") == '0':
