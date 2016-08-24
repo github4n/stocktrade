@@ -58,11 +58,11 @@ class sellMonitor:
 
                 #可以卖出标识
                 if item['tradestatus']==0:
-                    if nowprice < item['lossprice']:
-                        print 'sell stock:', item['code']
-                        # 计算可买股票数
-                        sellcount = item['stockcount']
-                        self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun')
+                    # if nowprice < item['lossprice']:
+                    #     print 'sell stock:', item['code']
+                    #     # 计算可买股票数
+                    #     sellcount = item['stockcount']
+                    #     self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun')
 
                     # 止损点为5个点
                     if profit < -5 and todayprofit < 0:
