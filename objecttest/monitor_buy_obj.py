@@ -58,6 +58,8 @@ class buyMonitor:
             buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
             buyCount = int(self.useryjb.balance[0]['asset_balance']/3 / (buyprice * 100))*100
+        if buyCount<=0:
+            return
         # 买入股票(初期设置100的数量，后期使用策略)
         buyret = self.useryjb.buy(code, price=buyprice, amount=buyCount)
         if buyret['error_no'].encode("utf-8") == '0':
