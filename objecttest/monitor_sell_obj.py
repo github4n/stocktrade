@@ -59,55 +59,16 @@ class sellMonitor:
                 #可以卖出标识
                 if item['tradestatus']==0:
 
-                    # 新增卖出策略保证盈利(1/3卖出策略)
+                    #止损卖出
                     sellcount = item['stockcount']
-                    if item['tradestatus'] == 0 and self.ifSell(profit, maxprofit, todayprofit, 0):
+                    if nowprice < item['lossprice']:
                         self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun', item['buytime'])
 
-                    # 止损点为5个点
-                    if profit < -5 and todayprofit < 0:
-                        print 'sell stock:', item['code']
 
-                        # 计算可买股票数
-                        sellcount = item['stockcount']
+                    #止盈卖出=
+                    if  self.ifSell(profit, maxprofit, todayprofit, 0):
+                        self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhiying', item['buytime'])
 
-                        self.sellStock(item['code'].encode("utf-8"),sellprice,sellcount,'zhisun',item['buytime'])
-
-                    # 最大收益大于10个点，止盈点为最大收益回落5个点
-                    if maxprofit > 10:
-
-                        # 新增卖出策略保证盈利(1/3卖出策略)
-                        sellcount = item['stockcount']
-                        if item['tradestatus'] == 0 and self.ifSell(profit, maxprofit, todayprofit, 0):
-                            self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun',item['buytime'])
-
-                        if maxprofit - 5 >= profit:
-                            print 'sell stock:', item['code']
-
-                            # 计算可买股票数
-                            sellcount = item['stockcount']
-                            self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhiying',item['buytime'])
-
-                    # 收益低于10，回落4个点止盈
-                    if maxprofit <= 10:
-                        if maxprofit - 5 >= profit:
-                            print 'sell stock:', item['code']
-
-                            # 计算可卖股票数
-                            sellcount = item['stockcount']
-                            if profit > 0:
-                                self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhiying',item['buytime'])
-                            else:
-                                self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun',item['buytime'])
-                        # 最大收益为负数
-                        if maxprofit <= 0:
-                            if maxprofit + 4 >= profit:
-                                print 'sell stock:', item['code']
-
-                                # 计算可卖股票数
-                                sellcount = item['stockcount']
-
-                                self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun',item['buytime'])
             except Exception as e:
                 print e
                 continue
@@ -130,16 +91,16 @@ class sellMonitor:
             print sellret
             print sellret['error_info'].encode("utf-8")
             print '卖出错误'
+
     #卖出策略
     def ifSell(self,profit,maxProfit,todayprofit,daycount):
         #低于最大收益的30%卖出
-        if profit <= maxProfit*0.6:
+        if profit > 0 and profit <= maxProfit*0.6:
             return 1
         #超过3天收益低于3个点，出局
         if daycount >= 3:
             if maxProfit < 3:
                 return 1
-
         return 0
 
 
