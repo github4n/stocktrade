@@ -104,6 +104,16 @@ class sellMonitor:
         return 0
 
 
+    #更新止损价
+    def updateLossprice(self):
+        for item in self.conn.mystock.yjbtrade.find({'tradestatus': 0}):
+            starttime = item['buytime'].split(' ')[0]
+            if starttime == self.today:
+                df = ts.get_realtime_quotes(item['code'])
+                lossprice = round(float(df['low'][0]), 2)
+                self.conn.mystock.yjbtrade.update({'code': item['code'], 'buytime': item['buytime']},
+                                                  {'$set': {'lossprice': lossprice}})
+
     def monitor(self):
         while 1:
 
@@ -114,6 +124,11 @@ class sellMonitor:
 
             if (time.strftime("%H:%M:%S", time.localtime()) == '11:30:00'):
                 time.sleep(5400)
+
+            #更新当天最小值作为止损价
+            if (time.strftime("%H:%M:%S", time.localtime()) == '15:00:00'):
+                self.updateLossprice()
+                break
             # 下午3点退出
             if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
                 break
