@@ -35,15 +35,15 @@ class sellMonitor:
                 if starttime == self.today:
                     # 更新最大收益价格值
                     if (nowprice > maxprice):
-                        conn.mystock.yjbtrade.update({'code': item['code']}, {'$set': {'maxprice': nowprice}})
+                        conn.mystock.yjbtrade.update({'code': item['code'],'buytime':item['buytime']}, {'$set': {'maxprice': nowprice}})
                     # 更新最低价格
                     if (nowprice < lossprice):
-                        conn.mystock.yjbtrade.update({'code': item['code']}, {'$set': {'lossprice': lossprice}})
+                        conn.mystock.yjbtrade.update({'code': item['code'],'buytime':item['buytime']}, {'$set': {'lossprice': lossprice}})
                     continue
 
                 # 更新最大收益价格值
                 if (nowprice > maxprice):
-                    conn.mystock.yjbtrade.update({'code': item['code']}, {'$set': {'maxprice': nowprice}})
+                    conn.mystock.yjbtrade.update({'code': item['code'],'buytime':item['buytime']}, {'$set': {'maxprice': nowprice}})
 
                 # 当前收益
                 profit = round((float(nowprice) - float(item['buyprice'])) / float(item['buyprice']) * 100, 2)
