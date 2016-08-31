@@ -64,6 +64,12 @@ class sellMonitor:
                     #     sellcount = item['stockcount']
                     #     self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun')
 
+
+                    # 新增卖出策略保证盈利(1/3卖出策略)
+                    sellcount = item['stockcount']
+                    if item['tradestatus'] == 0 and self.ifSell(profit, maxprofit, todayprofit, 0):
+                        self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun', item['buytime'])
+
                     # 止损点为5个点
                     if profit < -5 and todayprofit < 0:
                         print 'sell stock:', item['code']
