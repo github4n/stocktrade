@@ -126,11 +126,9 @@ class sellMonitor:
                 time.sleep(5400)
 
             #更新当天最小值作为止损价
-            if (time.strftime("%H:%M:%S", time.localtime()) == '15:00:00'):
-                self.updateLossprice()
-                break
             # 下午3点退出
             if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
+                self.updateLossprice()
                 break
             self.deal()
 
