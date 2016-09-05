@@ -110,7 +110,7 @@ class sellMonitor:
             starttime = item['buytime'].split(' ')[0]
             if starttime == self.today:
                 df = ts.get_realtime_quotes(item['code'])
-                if item['buyprice']<float(df['price'][0],2):
+                if float(item['buyprice']) < float(df['price'][0]):
                     self.conn.mystock.yjbtrade.update({'code': item['code'], 'buytime': item['buytime']},
                                                       {'$set': {'lossprice': item['buyprice']}})
                     continue
