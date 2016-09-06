@@ -97,20 +97,24 @@ class sellMonitor:
 
             # 止损点为5个点
         if profit < -5 and todayprofit < 0:
+            print 11111111111111111111
             return 1
 
         # 最大收益大于10个点，止盈点为最大收益回落5个点
         if maxprofit > 10 and maxprofit - 5 >= profit:
+            print 22222222222222222222
             return 1
 
 
         # 收益低于10，回落4个点止盈
         if maxprofit <= 10:
             if maxprofit - 5 >= profit:
-               return 1
+                print 33333333333333333
+                return 1
             # 最大收益为负数
             if maxprofit <= 0:
                 if maxprofit + 4 >= profit:
+                    print 44444444444444444444444
                     return 1
 
         # 暂时停止使用策略
