@@ -26,11 +26,11 @@ class buyMonitor:
                 if (item['status'] == 'init'):
                     # 判断低开
                     if (df['pre_close'] > df['open']).bool():
-                        self.updateStatus(item['code'],'lowopen',0)
+                        self.updateStatus(item['code'],'lowopen',0,item['date'])
 
                     # 判断高开
                     if (df['pre_close'] <= df['open']).bool():
-                        self.updateStatus(item['code'], 'highopen',0)
+                        self.updateStatus(item['code'], 'highopen',0,item['date'])
 
                 # 低开过零轴（买入）
                 if ((item['status'] == 'lowopen') and (df['price'] > df['pre_close']).bool()):
@@ -40,7 +40,7 @@ class buyMonitor:
                 #高开低走
                 if (item['status'] == 'highopen') and (df['price'] < df['open']).bool():
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
-                    self.updateStatus(item['code'], 'highopenlow',0)
+                    self.updateStatus(item['code'], 'highopenlow',0,item['date'])
 
                 #高开低走再高走（买入）
                 if (item['status'] == 'highopenlow') and (df['price'] > df['open']).bool():
