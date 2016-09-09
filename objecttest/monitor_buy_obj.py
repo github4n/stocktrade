@@ -34,18 +34,22 @@ class buyMonitor:
 
                 # 低开过零轴（买入）
                 if ((item['status'] == 'lowopen') and (df['price'] > df['pre_close']).bool()):
-                    self.buyStock(df,item['code'].encode("utf-8"),'lowopencross0')
+                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+                    self.buyStock(df,item['code'].encode("utf-8"),'lowopencross0',item['date'],buyprice)
 
                 #高开低走
                 if (item['status'] == 'highopen') and (df['price'] < df['open']).bool():
+                    buyprice = round(float(df['price'][0]) * 1.02, 2)
                     self.updateStatus(item['code'], 'highopenlow',0)
 
                 #高开低走再高走（买入）
                 if (item['status'] == 'highopenlow') and (df['price'] > df['open']).bool():
-                    self.buyStock(df,item['code'].encode("utf-8"),'highopenlowhigh')
+                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+                    self.buyStock(df,item['code'].encode("utf-8"),'highopenlowhigh',item['date'],buyprice)
 
-                if (item['status'] == 'predeal') and (df['price'] <= item['buyprice']):
-                    self.buyStock(df, item['code'].encode("utf-8"), 'predeal')
+                if (item['status'] == 'predeal') and (df['price'] <= item['buyprice'],item['date']):
+                    buyprice = item['buyprice']
+                    self.buyStock(df, item['code'].encode("utf-8"), 'predeal',buyprice)
 
 
             except Exception as e:
@@ -54,23 +58,22 @@ class buyMonitor:
 
 
     #买入股票
-    def buyStock(self,df,code,type):
+    def buyStock(self,df,code,type,date,buyprice):
         # 佣金宝购买策略
         buyCount = 100
-        buyprice = round(float(df['price'][0]) * 1.02, 2)
         #最大数量
         if self.useryjb.balance[0]['asset_balance']/3 > self.useryjb.balance[0]['enable_balance']:
             buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
             buyCount = int(self.useryjb.balance[0]['asset_balance']/3 / (buyprice * 100))*100
-        if buyCount<=0:
+        if buyCount<=100:
             self.updateStatus(code, 'predeal',buyprice)
             return
         # 买入股票(初期设置100的数量，后期使用策略)
         buyret = self.useryjb.buy(code, price=buyprice, amount=buyCount)
         if buyret['error_no'].encode("utf-8") == '0':
             #修改状态代码
-            self.updateStatus(code,type,0)
+            self.updateStatus(code,type,0,date)
             #插入数据代码
             self.addTrade(df,code,buyCount,type,buyret)
             #print代码
@@ -86,7 +89,7 @@ class buyMonitor:
             print buyret
             print buyret['error_info'].encode("utf-8")
     #更新监控数据状态
-    def updateStatus(self,code,type,price):
+    def updateStatus(self,code,type,price,date):
 
         if type =='highopenlow':
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'status': 'highopen'},{'$set': {'status': type}})
@@ -101,7 +104,7 @@ class buyMonitor:
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'status': 'init'},{'$set': {'status': type}})
 
         elif type == 'predeal':
-            self.conn.mystock.monitor_weakhardencode.update({'code': code, 'status': 'init'},
+            self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
                                                             {'$set': {'status': type,'buyprice':price}})
 
     def addTrade(self,df,code,count,type,buyret):
