@@ -49,7 +49,7 @@ class buyMonitor:
 
                 if (item['status'] == 'predeal') and (df['price'] <= item['buyprice'],item['date']):
                     buyprice = round(float(item['buyprice']) * 1.02, 2)
-                    self.buyStock(df, item['code'].encode("utf-8"), 'predeal',buyprice)
+                    self.buyStock(df, item['code'].encode("utf-8"), 'predeal',item['date'],buyprice)
 
 
             except Exception as e:
