@@ -27,30 +27,35 @@ class buyMonitor:
                     # 判断低开
                     if (df['pre_close'] > df['open']).bool():
                         self.updateStatus(item['code'],'lowopen',0,item['date'])
+                        continue
 
                     # 判断高开
                     if (df['pre_close'] <= df['open']).bool():
                         self.updateStatus(item['code'], 'highopen',0,item['date'])
+                        continue
 
                 # 低开过零轴（买入）
                 if ((item['status'] == 'lowopen') and (df['price'] > df['pre_close']).bool()):
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
                     self.buyStock(df,item['code'].encode("utf-8"),'lowopencross0',item['date'],buyprice)
+                    continue
 
                 #高开低走
                 if (item['status'] == 'highopen') and (df['price'] < df['open']).bool():
-                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+                    # buyprice = round(float(df['price'][0]) * 1.02, 2)
                     self.updateStatus(item['code'], 'highopenlow',0,item['date'])
+                    continue
 
                 #高开低走再高走（买入）
                 if (item['status'] == 'highopenlow') and (df['price'] > df['open']).bool():
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
                     self.buyStock(df,item['code'].encode("utf-8"),'highopenlowhigh',item['date'],buyprice)
+                    continue
 
                 if (item['status'] == 'predeal') and (df['price'] <= item['buyprice'],item['date']):
                     buyprice = round(float(item['buyprice']) * 1.02, 2)
                     self.buyStock(df, item['code'].encode("utf-8"), 'predeal',item['date'],buyprice)
-
+                    continue
 
             except Exception as e:
                 print e
