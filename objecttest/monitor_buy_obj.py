@@ -70,6 +70,7 @@ class buyMonitor:
             self.updateStatus(code, 'predeal',buyprice,date)
             return
         # 买入股票(初期设置100的数量，后期使用策略)
+        buyCount = 100
         buyret = self.useryjb.buy(code, price=buyprice, amount=buyCount)
         if buyret['error_no'].encode("utf-8") == '0':
             #修改状态代码
