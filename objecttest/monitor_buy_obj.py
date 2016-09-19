@@ -118,7 +118,7 @@ class buyMonitor:
                                            "buytype": "zrztb", "detailtype": type,
                                            "buyprice": df['price'][0],
                                            "tradestatus": 0, 'stockcount': count, 'maxprice': df['price'][0],
-                                           'buyret': buyret,'lossprice':df['price'][0],'name':df['name'][0]})
+                                           'buyret': buyret,'lossprice':df['price'][0],'name':df['name'][0],'holddays':0})
     #监控器
     def monitor(self):
         while 1:
