@@ -1,10 +1,10 @@
 
 #coding=utf-8
 import pymongo
-import json
 import tushare as ts
 import time
 import easytrader as et
+from multiprocessing.pool import ThreadPool
 
 class buyMonitor:
     #佣金宝登录
@@ -132,7 +132,11 @@ class buyMonitor:
             # 下午3点退出
             if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
                 break
-            self.deal()
+            stock_codes = []
+            for item in self.conn.mystock.todaydata.find():
+                stock_codes.append(item['code'])
+            pool = ThreadPool(5)
+            pool.map(self.deal, stock_codes)
 
 
 buyMonitor().monitor()
