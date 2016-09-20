@@ -52,7 +52,7 @@ class buyMonitor:
                     self.buyStock(df,item['code'].encode("utf-8"),'highopenlowhigh',item['date'],buyprice)
                     continue
 
-                if (item['status'] == 'predeal') and (df['price'] <= item['buyprice'],item['date']):
+                if (item['status'] == 'predeal') and (df['price'] <= item['buyprice']).bool():
                     buyprice = round(float(item['buyprice']) * 1.02, 2)
                     self.buyStock(df, item['code'].encode("utf-8"), 'predeal',item['date'],buyprice)
                     continue
@@ -67,10 +67,10 @@ class buyMonitor:
         # 佣金宝购买策略
         buyCount = 100
         #最大数量
-        if self.useryjb.balance[0]['asset_balance']/3 > self.useryjb.balance[0]['enable_balance']:
+        if self.useryjb.balance[0]['asset_balance'] > self.useryjb.balance[0]['enable_balance']:
             buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
-            buyCount = int(self.useryjb.balance[0]['asset_balance']/3 / (buyprice * 100))*100
+            buyCount = int(self.useryjb.balance[0]['asset_balance'] / (buyprice * 100))*100
         if buyCount<=100:
             if type!= 'predeal':
                 self.updateStatus(code, 'predeal',buyprice,date)
