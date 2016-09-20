@@ -72,7 +72,8 @@ class buyMonitor:
         else:
             buyCount = int(self.useryjb.balance[0]['asset_balance']/3 / (buyprice * 100))*100
         if buyCount<=100:
-            self.updateStatus(code, 'predeal',buyprice,date)
+            if type!= 'predeal':
+                self.updateStatus(code, 'predeal',buyprice,date)
             return
         # 买入股票(初期设置100的数量，后期使用策略)
         buyCount = 100
