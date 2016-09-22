@@ -110,6 +110,11 @@ class buyMonitor:
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'status': 'init'},{'$set': {'status': type}})
 
         elif type == 'predeal':
+            for item in self.conn.mystock.monitor_weakhardencode.find({'code': code, 'date': date}):
+                if item['status'] == 'predeal':
+                    self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
+                                                                    {'$set': {'status': type, 'isdeal': 1}})
+                    break
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
                                                             {'$set': {'status': type,'buyprice':price}})
 
