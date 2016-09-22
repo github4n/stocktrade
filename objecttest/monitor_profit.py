@@ -37,4 +37,8 @@ class monitor:
 
                 print '[highopenlowhigh] ',item['code'],item['name'],item['buytime'],' buy price ', item['buyprice'],'and now price ', nowprice,'最大收益',round(maxprofit,2),'%','当前收益:',round(nowprofit,2),'%','总收益:',round(profit,2),'%','持股状态:',item['tradestatus']
 
+            if (status == 'predeal'):
+                print '[highopenlowhigh] ', item['code'], item['name'], item['buytime'], ' buy price ', item['buyprice'], 'and now price ', nowprice, '最大收益', round(maxprofit, 2), '%', '当前收益:', round(nowprofit,2), '%', '总收益:', round(profit, 2), '%', '持股状态:', item['tradestatus']
+
+
 monitor().monitortrade()
