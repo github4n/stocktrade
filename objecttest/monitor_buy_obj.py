@@ -71,7 +71,7 @@ class buyMonitor:
             buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
             buyCount = int(self.useryjb.balance[0]['asset_balance'] / (buyprice * 100))*100
-        if buyCount<=100:
+        if buyCount<100:
             if type!= 'predeal':
                 self.updateStatus(code, 'predeal',buyprice,date)
             return
