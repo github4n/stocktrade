@@ -52,7 +52,7 @@ class buyMonitor:
                     self.buyStock(df,item['code'].encode("utf-8"),'highopenlowhigh',item['date'],buyprice)
                     continue
 
-                if (item['status'] == 'predeal') and (df['price'] <= item['buyprice']).bool():
+                if (item['status'] == 'predeal') and (df['price'][0] <= item['buyprice']).bool():
                     self.buyStock(df, item['code'].encode("utf-8"), 'predeal',item['date'],buyprice)
                     continue
 
