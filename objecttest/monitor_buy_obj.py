@@ -23,7 +23,6 @@ class buyMonitor:
         for item in conn.mystock.monitor_weakhardencode.find({"isdeal": 0}):
             try:
                 df = ts.get_realtime_quotes(item['code'])
-                print item['code'], '时间：', time.strftime("%H:%M:%S", time.localtime()), '\n'
                 if (item['status'] == 'init'):
                     # 判断低开
                     if (df['pre_close'] > df['open']).bool():
@@ -60,42 +59,6 @@ class buyMonitor:
             except Exception as e:
                 print e
                 continue
-
-    # 多线程处理方法
-    def multideal(self,item):
-        conn = self.conn
-        try:
-            df = ts.get_realtime_quotes(item['code'])
-            print item['code'],'时间：',time.strftime("%H:%M:%S", time.localtime()),'\n'
-            if (item['status'] == 'init'):
-                # 判断低开
-                if (df['pre_close'] > df['open']).bool():
-                    self.updateStatus(item['code'], 'lowopen', 0, item['date'])
-
-                # 判断高开
-                if (df['pre_close'] <= df['open']).bool():
-                    self.updateStatus(item['code'], 'highopen', 0, item['date'])
-
-            # 低开过零轴（买入）
-            if ((item['status'] == 'lowopen') and (df['price'] > df['pre_close']).bool()):
-                buyprice = round(float(df['price'][0]) * 1.02, 2)
-                self.buyStock(df, item['code'].encode("utf-8"), 'lowopencross0', item['date'], buyprice)
-
-            # 高开低走
-            if (item['status'] == 'highopen') and (df['price'] < df['open']).bool():
-                # buyprice = round(float(df['price'][0]) * 1.02, 2)
-                self.updateStatus(item['code'], 'highopenlow', 0, item['date'])
-
-            # 高开低走再高走（买入）
-            if (item['status'] == 'highopenlow') and (df['price'] > df['open']).bool():
-                buyprice = round(float(df['price'][0]) * 1.02, 2)
-                self.buyStock(df, item['code'].encode("utf-8"), 'highopenlowhigh', item['date'], buyprice)
-
-            if (item['status'] == 'predeal') and (round(float(df['price'][0]), 2) <= item['buyprice']):
-                self.buyStock(df, item['code'].encode("utf-8"), 'predeal', item['date'], item['buyprice'])
-
-        except Exception as e:
-            print e
 
     #买入股票
     def buyStock(self,df,code,type,date,buyprice):
@@ -172,6 +135,7 @@ class buyMonitor:
             if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
                 break
             self.deal()
+            time.sleep(3)
             # stock_codes = []
             # for item in self.conn.mystock.todaydata.find():
             #     stock_codes.append(item['code'])
