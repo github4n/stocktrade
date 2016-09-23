@@ -137,11 +137,16 @@ class sellMonitor:
                 df = ts.get_realtime_quotes(item['code'])
                 if float(item['buyprice']) < float(df['price'][0]):
                     self.conn.mystock.yjbtrade.update({'code': item['code'], 'buytime': item['buytime']},
-                                                      {'$set': {'lossprice': item['buyprice'],'holddays':item['holddays']+1}})
+                                                      {'$set': {'lossprice': item['buyprice']}})
                     continue
                 lossprice = round(float(df['low'][0]), 2)
                 self.conn.mystock.yjbtrade.update({'code': item['code'], 'buytime': item['buytime']},
-                                                  {'$set': {'lossprice': lossprice,'holddays':item['holddays']+1}})
+                                                  {'$set': {'lossprice': lossprice}})
+
+    def updateholddays(self):
+        for item in self.conn.mystock.yjbtrade.find({'tradestatus': 0}):
+            self.conn.mystock.yjbtrade.update({'code': item['code'], 'buytime': item['buytime']},
+                                          {'$set': {'holddays': item['holddays'] + 1}})
 
     def monitor(self):
         while 1:
@@ -158,6 +163,7 @@ class sellMonitor:
             # 下午3点退出
             if (time.strftime("%H:%M:%S", time.localtime()) > '15:00:00'):
                 self.updateLossprice()
+                self.updateholddays()
                 break
             self.deal()
 
