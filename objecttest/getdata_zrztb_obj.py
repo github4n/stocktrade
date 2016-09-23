@@ -51,6 +51,7 @@ class dataDeal:
 
                     ztflag = 0
                     ztcount = 0
+                    lowprice = ztprice
                     for stock in conn.mystock.todaydata_zrztbmingxi.find({"code": item['code']}).sort("time",
                                                                                                       pymongo.ASCENDING):
 
@@ -63,6 +64,8 @@ class dataDeal:
                         if (ztflag == 1):
                             if (stock['price'] < ztprice):
                                 ztcount += 1
+                                if lowprice > stock['price']:
+                                    lowprice = stock['price']
 
                             if (stock['price'] == ztprice):
                                 if (stock['type'] == u'买盘'):
@@ -91,7 +94,8 @@ class dataDeal:
                                 "status": "init",
                                 "date": inserttime,
                                 "isdeal": 0,
-                                "type":'zrztb'
+                                "type":'zrztb',
+                                "lowprice":lowprice
                             }
                             # 需要增加macd值和前一天的macd值
                             conn.mystock.monitor_weakhardencode.insert(insertdata)
