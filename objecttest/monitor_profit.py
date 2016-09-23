@@ -9,8 +9,8 @@ class monitor:
     def monitortrade(self):
         conn = pymongo.MongoClient('192.168.222.188', port=27017)
         # for item in conn.mystock.trade.find({'buytime':re.compile('2016-05-27')}):
-        # for item in conn.mystock.yjbtrade.find({'tradestatus':0}).sort('buytime',pymongo.ASCENDING):
-        for item in conn.mystock.yjbtrade.find().sort('buytime', pymongo.DESCENDING).limit(10):
+        for item in conn.mystock.yjbtrade.find({'tradestatus':0}).sort('buytime',pymongo.ASCENDING):
+        # for item in conn.mystock.yjbtrade.find().sort('buytime', pymongo.DESCENDING).limit(10):
 
             # print item['buytime']
             df = ts.get_realtime_quotes(item['code'])
