@@ -54,7 +54,7 @@ class buyMonitor:
                     continue
 
                 if (item['status'] == 'predeal') and (round(float(df['price'][0]), 2) <= item['buyprice']):
-                    self.buyStock(df, item['code'].encode("utf-8"), 'predeal',item['date'],item['buyprice'])
+                    self.buyStock(df, item['code'].encode("utf-8"), 'deal',item['date'],item['buyprice'])
                     continue
 
             except Exception as e:
@@ -146,13 +146,11 @@ class buyMonitor:
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'status': 'init'},{'$set': {'status': type}})
 
         elif type == 'predeal':
-            for item in self.conn.mystock.monitor_weakhardencode.find({'code': code, 'date': date}):
-                if item['status'] == 'predeal':
-                    self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
-                                                                    {'$set': {'status': type, 'isdeal': 1}})
-                    break
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
                                                             {'$set': {'status': type,'buyprice':price}})
+        elif type == 'deal':
+            self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
+                                                            {'$set': {'status': type, 'isdeal': 1}})
 
     def addTrade(self,df,code,count,type,buyret):
         self.conn.mystock.yjbtrade.insert({"code": code, "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
