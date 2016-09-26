@@ -60,10 +60,10 @@ class sellMonitor:
                 if item['tradestatus']==0:
 
                     #止损卖出
-                    sellcount = item['stockcount']
-                    if nowprice < item['lossprice']:
-                        print "nowprice",nowprice,"   item['lossprice']",item['lossprice']
-                        self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun', item['buytime'])
+                    # sellcount = item['stockcount']
+                    # if nowprice < item['lossprice']:
+                    #     print "nowprice",nowprice,"   item['lossprice']",item['lossprice']
+                    #     self.sellStock(item['code'].encode("utf-8"), sellprice, sellcount, 'zhisun', item['buytime'])
 
 
                     #止盈卖出=
