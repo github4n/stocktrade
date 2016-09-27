@@ -18,7 +18,7 @@ class sellMonitor:
     today = time.strftime("%Y-%m-%d", time.localtime())
     def deal(self):
         conn = self.conn
-        for item in conn.mystock.yjbtrade.find():
+        for item in conn.mystock.yjbtrade.find({'tradestatus':0}):
 
             try:
                 df = ts.get_realtime_quotes(item['code'])
@@ -29,6 +29,8 @@ class sellMonitor:
                 # 最大值需要替换前面程序
                 maxprice = round(float(item['maxprice']), 2)
                 nowprice = round(float(df['price'][0]), 2)
+                if nowprice == 0.0:
+                    continue
                 preclose = round(float(df['pre_close'][0]), 2)
                 lossprice = round(float(df['low'][0]), 2)
                 #如果当天，更新最大价格
