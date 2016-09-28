@@ -99,25 +99,25 @@ class sellMonitor:
     def ifSell(self,profit,maxprofit,todayprofit,daycount):
 
             # 止损点为5个点
-        if profit < -5 and todayprofit < 0:
+        if profit < -3 and todayprofit < 0:
             print 'profit < -5 and todayprofit < 0'
             return 1
 
         # 最大收益大于10个点，止盈点为最大收益回落5个点
         if maxprofit > 10 and maxprofit - 3 >= profit:
-            print 'maxprofit > 10 and maxprofit - 5 >= profit'
+            print 'maxprofit > 10 and maxprofit - 3 >= profit'
             return 1
 
 
-        # 收益低于10，回落4个点止盈
+        # 收益低于10，回落3个点止盈
         if maxprofit <= 10:
             if maxprofit - 3 >= profit:
-                print 'maxprofit - 5 >= profit'
+                print 'maxprofit - 3 >= profit'
                 return 1
             # 最大收益为负数
             if maxprofit <= 0:
-                if maxprofit + 4 >= profit:
-                    print 'maxprofit + 4 >= profit'
+                if profit <= 0:
+                    print 'profit <= 0'
                     return 1
 
         # 暂时停止使用策略
