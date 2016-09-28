@@ -78,6 +78,7 @@ class buyMonitor:
             buyCount = int(self.useryjb.balance[0]['enable_balance'] / (buyprice * 100))*100
         else:
             buyCount = int(self.useryjb.balance[0]['asset_balance'] / (buyprice * 100))*100
+            print '股票',code,'可买数量为:',buyCount,'时间:',time.strftime("%H:%M:%S", time.localtime())
         if buyCount<100:
             if type!= 'predeal':
                 self.updateStatus(code, 'predeal',buyprice,date)
