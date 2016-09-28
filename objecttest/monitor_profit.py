@@ -1,6 +1,7 @@
 #coding=utf-8
 import pymongo
 import tushare as ts
+import time
 import re
 class monitor:
     """
@@ -38,5 +39,6 @@ class monitor:
 
         print '[hand] ', '002703', '浙江世宝', item['buytime'], ' buy price ', 41.27, 'and now price ', nowprice, '当前收益:', round(profit, 2), '%',
 
-
-monitor().monitortrade()
+while 1:
+    monitor().monitortrade()
+    time.sleep(5)
