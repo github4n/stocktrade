@@ -38,7 +38,8 @@ class monitor:
         profit = (float(nowprice) - 41.27) / 41.27 * 100
 
         print '[hand] ', '002703', '浙江世宝', item['buytime'], ' buy price ', 41.27, 'and now price ', nowprice, '当前收益:', round(profit, 2), '%',
-        print '==========================='
+
 while 1:
+    print '==========================='
     monitor().monitortrade()
     time.sleep(5)
