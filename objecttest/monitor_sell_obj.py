@@ -104,14 +104,14 @@ class sellMonitor:
             return 1
 
         # 最大收益大于10个点，止盈点为最大收益回落5个点
-        if maxprofit > 10 and maxprofit - 5 >= profit:
+        if maxprofit > 10 and maxprofit - 3 >= profit:
             print 'maxprofit > 10 and maxprofit - 5 >= profit'
             return 1
 
 
         # 收益低于10，回落4个点止盈
         if maxprofit <= 10:
-            if maxprofit - 5 >= profit:
+            if maxprofit - 3 >= profit:
                 print 'maxprofit - 5 >= profit'
                 return 1
             # 最大收益为负数
