@@ -61,7 +61,7 @@ class buyMonitor:
                     continue
 
                 if (item['status'] == 'predeal') and (round(float(df['price'][0]), 2) <= item['buyprice']):
-                    print item['code'], '判断预处理价格：', round(float(df['price'][0]), 2),'时间：',time.strftime("%H:%M:%S", time.localtime())
+                    # print item['code'], '判断预处理价格：', round(float(df['price'][0]), 2),'时间：',time.strftime("%H:%M:%S", time.localtime())
                     self.buyStock(df, item['code'].encode("utf-8"), 'deal',item['date'],item['buyprice'])
                     continue
 
