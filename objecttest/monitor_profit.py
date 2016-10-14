@@ -39,7 +39,16 @@ class monitor:
 
         print '[hand] ', '002703', '浙江世宝', ' buy price ', 41.27, 'and now price ', nowprice, '当前收益:', round(profit, 2), '%',
         print '\n'
+        df = ts.get_realtime_quotes('603067')
+        nowprice = df['price'][0]
+        profit = (float(nowprice) - 25.64) / 25.64 * 100
+
+        print '[hand] ', '603067', '振华股份', ' buy price ', 25.64, 'and now price ', nowprice, '当前收益:', round(profit,
+                                                                                                            2), '%',
+
+        print '\n'
 while 1:
     print '==========================='
+    print '\n'
     monitor().monitortrade()
     time.sleep(15)
