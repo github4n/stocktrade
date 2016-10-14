@@ -90,7 +90,8 @@ class buyMonitor:
             #修改状态代码
             self.updateStatus(code,type,0,date)
             #插入数据代码
-            self.addTrade(df,code,buyCount,type,buyret)
+            chengben = (buyprice*100+10 +  buyprice/10 + buyprice/1000)/100
+            self.addTrade(df,code,buyCount,type,buyret,chengben)
             #print代码
             print '买入'+code+"成功  买入类型："+type
             print '***********************'
@@ -125,10 +126,10 @@ class buyMonitor:
             self.conn.mystock.monitor_weakhardencode.update({'code': code, 'date': date},
                                                             {'$set': {'status': type, 'isdeal': 1}})
 
-    def addTrade(self,df,code,count,type,buyret):
+    def addTrade(self,df,code,count,type,buyret,buyprice):
         self.conn.mystock.yjbtrade.insert({"code": code, "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
                                            "buytype": "zrztb", "detailtype": type,
-                                           "buyprice": df['price'][0],
+                                           "buyprice": buyprice,
                                            "tradestatus": 0, 'stockcount': count, 'maxprice': df['price'][0],
                                            'buyret': buyret,'lossprice':df['price'][0],'name':df['name'][0],'holddays':0})
     #监控器
