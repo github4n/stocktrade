@@ -95,7 +95,8 @@ class dataDeal:
                                 "date": inserttime,
                                 "isdeal": 0,
                                 "type":'zrztb',
-                                "lowprice":lowprice
+                                "lowprice":lowprice,
+                                "close":item["trade"]
                             }
                             # 需要增加macd值和前一天的macd值
                             conn.mystock.monitor_weakhardencode.insert(insertdata)
