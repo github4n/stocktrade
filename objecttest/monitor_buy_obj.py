@@ -25,19 +25,19 @@ class buyMonitor:
                 df = ts.get_realtime_quotes(item['code'])
                 if (item['status'] == 'init'):
                     # 判断低开
-                    if (df['pre_close'] > df['open']).bool():
+                    if item["close"] > round(float(df['open'][0]), 2):
                         print item['code'], '判断低开价格：', round(float(df['price'][0]), 2),'时间：',time.strftime("%H:%M:%S", time.localtime())
                         self.updateStatus(item['code'],'lowopen',0,item['date'])
                         continue
 
                     # 判断高开
-                    if (df['pre_close'] <= df['open']).bool():
+                    if item["close"] <= round(float(df['open'][0]), 2):
                         print item['code'], '判断高开价格：', round(float(df['price'][0]), 2),'时间：',time.strftime("%H:%M:%S", time.localtime())
                         self.updateStatus(item['code'], 'highopen',0,item['date'])
                         continue
 
                 # 低开过零轴（买入）
-                if ((item['status'] == 'lowopen') and (df['price'] > df['pre_close']).bool()):
+                if ((item['status'] == 'lowopen') and (round(float(df['price'][0]), 2) > item["close"])):
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
                     print item['code'], '判断低开过零轴价格：', round(float(df['price'][0]), 2),'时间：',time.strftime("%H:%M:%S", time.localtime())
 
