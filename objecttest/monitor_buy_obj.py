@@ -90,7 +90,7 @@ class buyMonitor:
             #修改状态代码
             self.updateStatus(code,type,0,date)
             #插入数据代码
-            chengben = (buyprice*100+10 +  buyprice/10 + buyprice/1000)/100
+            chengben = (buyprice/1.02*100+10 +  buyprice/1.02/10 + buyprice/1.02/1000)/100
             self.addTrade(df,code,buyCount,type,buyret,chengben)
             #print代码
             print '买入'+code+"成功  买入类型："+type
