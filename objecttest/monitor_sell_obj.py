@@ -115,9 +115,9 @@ class sellMonitor:
                 print 'maxprofit - 3 >= profit'
                 return 1
             # 最大收益为负数
-            if profit <= 0:
-                print 'profit <= 0'
-                return 1
+            # if profit <= 0:
+            #     print 'profit <= 0'
+            #     return 1
 
         # 暂时停止使用策略
         # #低于最大收益的30%卖出
