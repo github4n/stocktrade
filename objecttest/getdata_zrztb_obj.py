@@ -49,8 +49,11 @@ class dataDeal:
                     # 查询当日分笔数据
                     conn.mystock.todaydata_zrztbmingxi.insert(json.loads(df.to_json(orient='records')))
 
+                    #是否开板过
                     ztflag = 0
+                    #开板交易笔数
                     ztcount = 0
+                    #开板后最低价格
                     lowprice = ztprice
                     for stock in conn.mystock.todaydata_zrztbmingxi.find({"code": item['code']}).sort("time",
                                                                                                       pymongo.ASCENDING):
@@ -58,7 +61,7 @@ class dataDeal:
                         # 判断涨停价格的时间分布，并回置monitor_weakhardencode表中的状态
                         if (stock['price'] == ztprice):
                             if (ztflag == 0):
-                                print "第一笔开板时间为:", stock['time']
+                                print "第一笔封板时间为:", stock['time']
                                 ztflag = 1
 
                         if (ztflag == 1):
