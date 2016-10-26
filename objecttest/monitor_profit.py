@@ -43,5 +43,8 @@ class monitor:
 while 1:
     print '==========================='
     print '\n'
-    monitor().monitortrade()
+    try:
+        monitor().monitortrade()
+    except Exception as e:
+        print e
     time.sleep(15)
