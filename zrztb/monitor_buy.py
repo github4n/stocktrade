@@ -8,8 +8,8 @@ import easytrader as et
 #最弱涨停板监控
 #
 
-useryjb = et.use('yjb')
-useryjb.prepare('yjb.json')
+# useryjb = et.use('yjb')
+# useryjb.prepare('yjb.json')
 
 
 user = et.use('xq')
@@ -63,17 +63,17 @@ while 1:
                     conn.mystock.yjbtrade.insert(
                         {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
                          "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                         "tradestatus": 0, 'stockcount': stockcount})
+                         "tradestatus": 0, 'stockcount': 100})
                     buyprice = round(float(df['price'][0]) * 1.02, 2)
 
                     # 买入股票(初期设置100的数量，后期使用策略)
-                    useryjb.buy(item['code'], price=buyprice, amount=100)
-                    print '***********************'
-                    print '***********************'
-                    print '*****佣金宝买入成功*****'
-                    print '***********************'
-                    print '***********************'
-                    print '买入价格', buyprice
+                    # useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
+                    # print '***********************'
+                    # print '***********************'
+                    # print '*****佣金宝买入成功*****'
+                    # print '***********************'
+                    # print '***********************'
+                    # print '买入价格', buyprice
 
 
                     #持仓数量小于策略数量时，购买
@@ -107,20 +107,20 @@ while 1:
 
                     # 佣金宝购买策略
                     # stockcount = int(user.balance[0]['enable_balance'] / (buyprice * 100))
-                    conn.mystock.yjbtrade.insert(
-                        {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
-                         "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
-                         "tradestatus": 0, 'stockcount': stockcount})
-                    buyprice = round(float(df['price'][0]) * 1.02, 2)
+                    # conn.mystock.yjbtrade.insert(
+                    #     {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
+                    #      "buytype": "zrztb", "detailtype": "lowopencross0", "buyprice": df['price'][0],
+                    #      "tradestatus": 0, 'stockcount': 100})
+                    # buyprice = round(float(df['price'][0]) * 1.02, 2)
 
                     # 买入股票(初期设置100的数量，后期使用策略)
-                    useryjb.buy(item['code'], price=buyprice, amount=100)
-                    print '***********************'
-                    print '***********************'
-                    print '*****佣金宝买入成功*****'
-                    print '***********************'
-                    print '***********************'
-                    print '买入价格', buyprice
+                    # useryjb.buy(item['code'].encode("utf-8"), price=buyprice, amount=100)
+                    # print '***********************'
+                    # print '***********************'
+                    # print '*****佣金宝买入成功*****'
+                    # print '***********************'
+                    # print '***********************'
+                    # print '买入价格', buyprice
 
                     # 持仓数量小于策略数量时，购买
                     if (maxstockcount > len(user.position)):
@@ -137,7 +137,7 @@ while 1:
                             {"code": item['code'], "buytime": time.strftime("%Y-%m-%d %X", time.localtime()),
                              "buytype": "zrztb", "detailtype": "highopenlowhigh", "buyprice": df['price'][0],
                              "tradestatus": 0, 'stockcount': stockcount})
-                        user.buy(item['code'], float(df['price'][0]), stockcount)
+                        user.buy(item['code'].encode("utf-8"), float(df['price'][0]), stockcount)
                         print '账户买入成功'
                         print '剩余可用资金', user.balance[0]['enable_balance']
                         print '买入数量', stockcount

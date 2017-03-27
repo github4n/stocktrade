@@ -9,7 +9,7 @@ class monitor:
     def monitortrade(self):
         conn = pymongo.MongoClient('192.168.222.188', port=27017)
         # for item in conn.mystock.trade.find({'buytime':re.compile('2016-05-27')}):
-        for item in conn.mystock.trade.find():
+        for item in conn.mystock.yjbtrade.find():
 
             # print item['buytime']
             df = ts.get_realtime_quotes(item['code'])
@@ -23,6 +23,7 @@ class monitor:
             nowprofit = (float(nowprice) - float(item['buyprice'])) / float(item['buyprice']) * 100
             #已经卖出的股票的收益
             if item['tradestatus']==1:
+                continue
                 profit = (float(item['sellprice'])-float(item['buyprice']))/float(item['buyprice'])*100
 
 
